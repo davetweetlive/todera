@@ -7,16 +7,28 @@ import (
 	"net/http"
 )
 
+type authentication struct {
+	authenticated bool
+	username      string
+}
+
 func loginHandler(writer http.ResponseWriter, request *http.Request) {
+
 	fmt.Println("Method:", request.Method)
-	// fmt.Fprintln(writer, "Login Handler!")
+	temp, err := template.ParseFiles("templates/login.html")
+	if err != nil {
+		log.Fatal("Not able to render login page", err)
+	}
+
 	if request.Method == "GET" {
-		temp, err := template.ParseFiles("templates/login.html")
-		if err != nil {
-			log.Fatal("Not able to render login page", err)
-		}
 		temp.Execute(writer, nil)
+
 	} else {
+		request.ParseForm()
+		fmt.Println("Username:", request.Form["username"])
+		fmt.Println("Password:", request.Form["password"])
+		temp.Execute(writer, nil)
+
 	}
 }
 
@@ -25,5 +37,10 @@ func SignupHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func LandingPageHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(writer, "Home Page")
+	temp, err := template.ParseFiles("templates/index.html")
+
+	if err != nil {
+		log.Fatal("Not able to render login page", err)
+	}
+	temp.Execute(writer, nil)
 }
