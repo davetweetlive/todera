@@ -12,22 +12,32 @@ type authentication struct {
 	username      string
 }
 
+var tmplt *template.Template
+
+func init() {
+	// ParseGlob will find all templates matching the pattern and store the templates into tmplt type.
+	// Which is again of *templete.Template type
+	parsedTemplates, err := template.ParseGlob("templates/*.html")
+	if err != nil {
+		log.Fatal("Something went wrong while parsing html files!", err)
+	}
+
+	// Must functions, used to verify that a template is valid during parsing.
+	tmplt = template.Must(parsedTemplates, err)
+}
+
 func loginHandler(writer http.ResponseWriter, request *http.Request) {
 
 	fmt.Println("Method:", request.Method)
-	temp, err := template.ParseFiles("templates/login.html")
-	if err != nil {
-		log.Fatal("Not able to render login page", err)
-	}
 
 	if request.Method == "GET" {
-		temp.Execute(writer, nil)
+		tmplt.ExecuteTemplate(writer, "login.html", 1)
 
 	} else {
 		request.ParseForm()
 		fmt.Println("Username:", request.Form["username"])
 		fmt.Println("Password:", request.Form["password"])
-		temp.Execute(writer, nil)
+		tmplt.ExecuteTemplate(writer, "login.html", 1)
 
 	}
 }
