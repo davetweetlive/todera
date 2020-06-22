@@ -2,12 +2,13 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func CreateTable() {
+func CreateUserTable() {
 
 	DBConnection, err := sql.Open("mysql", "root:Megamind@1@(127.0.0.1:3306)/note?parseTime=true")
 	if err != nil {
@@ -21,19 +22,20 @@ func CreateTable() {
 	// if err := db.Ping(); err != nil {
 	// 	log.Fatal(err)
 	// }
-	// fmt.Println(db)
-	// // Create a new table
+	fmt.Println(DBConnection)
+	// Create a new table
 	query := `
-	        CREATE TABLE users (
+	        CREATE TABLE IF NOT EXISTS users (
 	            id INT AUTO_INCREMENT,
-	            username TEXT NOT NULL,
+	            username varchar(255) NOT NULL UNIQUE,
 				password TEXT NOT NULL,
-				email TEXT NOT NULL,
-				first_name TEXT,
-				last_name TEXT,
+				email varchar(255) NOT NULL,
+				first_name varchar(255),
+				last_name varchar(255),
 				created_at DATETIME,
 				super_user BOOLEAN,
-	            PRIMARY KEY (id)
+				PRIMARY KEY (id)
+				
 	        );`
 
 	if _, err := DBConnection.Exec(query); err != nil {

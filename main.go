@@ -1,32 +1,29 @@
 package main
 
 import (
-	"Blog/models"
-	"log"
+	"Blog/views"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-// var SQLConnector *sql.DB
-
 // func init() {
-// 	// Connect to the database
-// 	SQLConnector, _ = models.EstablishDBConnection()
+// 	models.CreateUserTable()
 // }
 
 func main() {
-	models.CreateTable()
-	// fmt.Println(SQLConnector)
-	// To serve static fils
+
+	// Static files server like css, JavaScript and image files
 	fileServer := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
-	// different handlers
-	http.HandleFunc("/", LandingPageHandler)
-	http.HandleFunc("/login", loginHandler)
-	http.HandleFunc("/signup", SignupHandler)
-
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatalln("")
-	}
+	// Create a mux router
+	r := mux.NewRouter()
+	r.HandleFunc("/", views.HomePageGetHandler).Methods("GET")
+	r.HandleFunc("/signup", views.SignUpGetHandler).Methods("GET")
+	r.HandleFunc("/signup", views.SignUpPostHandler).Methods("POST")
+	r.HandleFunc("/login", views.LoginGetHandler).Methods("GET")
+	r.HandleFunc("/login", views.LoginPostHandler).Methods("POST")
+	http.Handle("/", r)
+	http.ListenAndServe(":8080", r)
 }

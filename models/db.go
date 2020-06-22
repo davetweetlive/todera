@@ -44,8 +44,8 @@ func SqlConnectionString() string {
 
 	json.Unmarshal(byteValue, &dbStruct)
 
-	dbConnString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbStruct.Db.Username, dbStruct.Db.Password, dbStruct.Db.Host, strconv.Itoa(dbStruct.Db.Port), dbStruct.Db.Database)
-
+	dbConnString := fmt.Sprintf("%s:%s@(%s:%s)/%s?parseTime=true", dbStruct.Db.Username, dbStruct.Db.Password, dbStruct.Db.Host, strconv.Itoa(dbStruct.Db.Port), dbStruct.Db.Database)
+	fmt.Println(dbConnString)
 	return dbConnString
 }
 
