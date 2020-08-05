@@ -1,29 +1,26 @@
 package main
 
 import (
-	"Blog/views"
+	"fmt"
+	"madhyam/routes"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
-// func init() {
-// 	models.CreateUserTable()
-// }
-
 func main() {
-
-	// Static files server like css, JavaScript and image files
-	fileServer := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
 	// Create a mux router
 	r := mux.NewRouter()
-	r.HandleFunc("/", views.HomePageGetHandler).Methods("GET")
-	r.HandleFunc("/signup", views.SignUpGetHandler).Methods("GET")
-	r.HandleFunc("/signup", views.SignUpPostHandler).Methods("POST")
-	r.HandleFunc("/login", views.LoginGetHandler).Methods("GET")
-	r.HandleFunc("/login", views.LoginPostHandler).Methods("POST")
+	r.HandleFunc("/", routes.HomePageGetHandler).Methods("GET")
+	r.HandleFunc("/login", routes.LoginGetHandler).Methods("GET")
+
+	// Static file server
+	fs := http.FileServer(http.Dir("./static/"))
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
+
 	http.Handle("/", r)
+
+	fmt.Println("Starting the server at port :8080")
 	http.ListenAndServe(":8080", r)
 }
