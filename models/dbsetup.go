@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type DBCreds struct {
@@ -42,20 +44,21 @@ func ConnectionStr() string {
 	password := dbc.Mysqldb.Password
 
 	connStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", username, password, host, port, database)
-	// fmt.Println(connStr)
+
 	return connStr
-	// return ""
+
 }
 
 func ConDB() *sql.DB {
 	db, err := sql.Open("mysql", ConnectionStr())
 	if err != nil {
-		fmt.Println("ERROR:")
+		fmt.Println("INTERNAL SERVER ERROR: Couldn't connect to the database!")
+	}
+
+	if err := db.Ping(); err != nil {
+		fmt.Println("INTERNAL SERVER ERROR: The connection has been closed!")
+		fmt.Println(err)
+		return nil
 	}
 	return db
-	// stm, err := db.Prepare(`CREATE Table employee(id int NOT NULL AUTO_INCREMENT, first_name varchar(50), last_name varchar(30), PRIMARY KEY (id));`)
-	// if err != nil {
-	// 	fmt.Println("ERRPR!")
-	// }
-	// fmt.Println(stm)
 }

@@ -14,6 +14,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", routes.HomePageGetHandler).Methods("GET")
 	r.HandleFunc("/login", routes.LoginGetHandler).Methods("GET")
+	r.HandleFunc("/signup", routes.SignupGetHandler).Methods("GET")
+	r.HandleFunc("/signup", routes.SignupPostHandler).Methods("POST")
 
 	// Static file server
 	fs := http.FileServer(http.Dir("./static/"))
@@ -22,5 +24,7 @@ func main() {
 	http.Handle("/", r)
 
 	fmt.Println("Starting the server at port :8080")
-	http.ListenAndServe(":8080", r)
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		fmt.Println("Couldn't start server at port 8080")
+	}
 }
