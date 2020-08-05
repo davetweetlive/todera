@@ -51,5 +51,8 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 	if password != password1 {
 		templates.ExecuteTemplate(w, "signup.html", "Password didn't match")
 	}
-	models.NewUser(username, email, password)
+	models.RegisterUser(username, email, password)
+
+	http.Redirect(w, r, "/login", http.StatusFound)
+
 }
