@@ -2,6 +2,7 @@ package routes
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"madhyam/models"
 	"net/http"
@@ -35,6 +36,15 @@ func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	username := r.PostForm.Get("username")
+	password := r.PostForm.Get("password")
+
+	if err := models.AuthenticateUser(username, password); err != nil {
+		fmt.Println("Username password wrong!")
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
 
 }
 

@@ -2,9 +2,12 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"madhyam/utils"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 var db *sql.DB
@@ -78,7 +81,21 @@ func RegisterUser(username, email, password string) error {
 	return nil
 }
 
-func AuthenticateUser(username, password string) error {
+// Steps for authentication an user via username, password or email, password
 
-	return nil
+func AuthenticateUser(username, password string) error {
+	var hash string
+
+	if err := db.QueryRow("SELECT  `password` FROM users where username = ? or email = ?;", username, username).Scan(&hash); err != nil {
+		fmt.Println("Login validation failed!")
+		return errors.New("Login validation failed")
+	}
+	fmt.Println(hash)
+
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return errors.New("Invalid Login")
+	}
+	return err
+	// return nil
 }

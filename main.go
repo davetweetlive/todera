@@ -14,6 +14,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", routes.HomePageGetHandler).Methods("GET")
 	r.HandleFunc("/login", routes.LoginGetHandler).Methods("GET")
+	r.HandleFunc("/login", routes.LoginPostHandler).Methods("POST")
 	r.HandleFunc("/signup", routes.SignupGetHandler).Methods("GET")
 	r.HandleFunc("/signup", routes.SignupPostHandler).Methods("POST")
 
