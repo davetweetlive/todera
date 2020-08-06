@@ -1,8 +1,7 @@
 package models
 
 const (
-	sqlStatementForUsername = "SELECT username FROM users WHERE username = ?"
-	sqlStatementForEmail    = "SELECT email FROM users WHERE email = ?"
-
-	userCreate = "INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, ?)"
+	selectUsername = "SELECT username FROM users WHERE username = ?"
+	selectEmail    = "SELECT email FROM users WHERE email = ?"
+	createUser     = "INSERT INTO users (username, password, email, created_at) VALUES (?, ?, ?, ?);"
 )
