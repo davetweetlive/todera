@@ -18,6 +18,13 @@ type User struct {
 	password []byte
 }
 
+var (
+	ErrEmailAlreadyRegistered   = errors.New("The email is already registered")
+	ErrUsernameIsTaken          = errors.New("The username is already taken")
+	ErrUserNotAvailable         = errors.New("User isn't available")
+	ErrUsernamePasswordMismatch = errors.New("Username or password wrong")
+)
+
 func init() {
 	db = ConDB()
 
@@ -30,7 +37,6 @@ func (u *User) ifEmailRegistered() bool {
 		return true
 	}
 	return false
-
 }
 
 // To check whether the user name has been already registered or taken by other user of the syatem
@@ -88,14 +94,13 @@ func AuthenticateUser(username, password string) error {
 
 	if err := db.QueryRow("SELECT  `password` FROM users where username = ? or email = ?;", username, username).Scan(&hash); err != nil {
 		fmt.Println("Login validation failed!")
-		return errors.New("Login validation failed")
+		return ErrUserNotAvailable
 	}
 	fmt.Println(hash)
 
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	if err == bcrypt.ErrMismatchedHashAndPassword {
-		return errors.New("Invalid Login")
+		return ErrUsernamePasswordMismatch
 	}
 	return err
-	// return nil
 }
