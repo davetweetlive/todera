@@ -20,6 +20,8 @@ var templates *template.Template
 var db *sql.DB
 var pageInfo PageInfo
 
+// Initialization of variables
+//
 func init() {
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	// Database
@@ -34,6 +36,12 @@ func init() {
 	}
 }
 
+// I
+// N
+// D
+// E
+// X
+// Page handler
 func HomePageGetHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "index.html", pageInfo)
 }
