@@ -25,15 +25,16 @@ var (
 	ErrUsernamePasswordMismatch = errors.New("Username or password wrong")
 )
 
+var uname string
+
 func init() {
 	db = ConDB()
-
 }
 
 // To check whether the email provided by a user is already registered or not
 func (u *User) ifEmailRegistered() bool {
-	var uname string
-	if err := db.QueryRow(selectEmail, u.username).Scan(&uname); err == nil {
+	fmt.Println("Email already registered mothod")
+	if err := db.QueryRow(selectEmail, u.email).Scan(&uname); err == nil {
 		return true
 	}
 	return false
@@ -41,7 +42,6 @@ func (u *User) ifEmailRegistered() bool {
 
 // To check whether the user name has been already registered or taken by other user of the syatem
 func (u *User) ifUsernameTaken() bool {
-	var uname string
 	if err := db.QueryRow(selectUsername, u.username).Scan(&uname); err == nil {
 		return true
 	}
@@ -66,15 +66,14 @@ func RegisterUser(username, email, password string) error {
 		return err
 	}
 
-	// 3. Check whether the email is already registered
+	// 3. Check whether the email and username is already registered
 	if user.ifEmailRegistered() {
 		fmt.Println("Email already registered")
-		return err
-	}
-	// 4. Check wheather the username is already used
-	if user.ifUsernameTaken() {
+		return ErrEmailAlreadyRegistered
+
+	} else if user.ifUsernameTaken() {
 		fmt.Println("Username already taken")
-		return err
+		return ErrUsernameIsTaken
 	}
 
 	// 5. Register user

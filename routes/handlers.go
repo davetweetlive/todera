@@ -32,7 +32,7 @@ func init() {
 	// Page info passed to the template from the backend
 	pageInfo = PageInfo{
 		Title:      "Madhyam",
-		Owner:      "SAffron Coders",
+		Owner:      "Saffron Coders",
 		LastUpdate: time.Now(),
 		ErrorMsg:   nil,
 	}
@@ -109,9 +109,27 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 	if password != password1 {
 		templates.ExecuteTemplate(w, "signup.html", "Password didn't match")
 	}
-	models.RegisterUser(username, email, password)
+	if err := models.RegisterUser(username, email, password); err != nil {
+		switch err {
 
-	http.Redirect(w, r, "/login", http.StatusFound)
+		case models.ErrUsernameIsTaken:
+			fmt.Println("Handler: Case usernam is taken")
+			pageInfo.ErrorMsg = models.ErrUsernameIsTaken
+			templates.ExecuteTemplate(w, "signup.html", pageInfo)
+
+		case models.ErrEmailAlreadyRegistered:
+			fmt.Println("Handler: Email is already registered")
+
+			pageInfo.ErrorMsg = models.ErrEmailAlreadyRegistered
+			templates.ExecuteTemplate(w, "signup.html", pageInfo)
+
+		default:
+			utils.InternalServerError(w)
+		}
+		return
+	}
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 // L
