@@ -2,8 +2,10 @@ package routes
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"madhyam/models"
+	"madhyam/sessions"
 	"madhyam/utils"
 	"net/http"
 	"time"
@@ -21,7 +23,7 @@ var db *sql.DB
 var pageInfo PageInfo
 
 // Initialization of variables
-//
+
 func init() {
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	// Database
@@ -76,7 +78,16 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	http.Redirect(w, r, "/", http.StatusFound)
+	// Session
+	session, err := sessions.Store.Get(r, "session")
+	if err != nil {
+		fmt.Println("Can't find the session")
+	}
+	session.Values["userid"] = username
+	session.Save(r, w)
+
+	// Removed StatusFound which is 302 and added StatusSeeOther which is 303
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func SignupGetHandler(w http.ResponseWriter, r *http.Request) {
@@ -101,4 +112,19 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 	models.RegisterUser(username, email, password)
 
 	http.Redirect(w, r, "/login", http.StatusFound)
+}
+
+// L
+// O
+// G
+// O
+// U
+// T
+// Handler for terminationg session
+func LogoutGetHandler(w http.ResponseWriter, r *http.Request) {
+	session, _ := sessions.Store.Get(r, "session")
+
+	delete(session.Values, "userid")
+	session.Save(r, w)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

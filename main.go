@@ -17,6 +17,9 @@ func main() {
 	r.HandleFunc("/login", routes.LoginPostHandler).Methods("POST")
 	r.HandleFunc("/signup", routes.SignupGetHandler).Methods("GET")
 	r.HandleFunc("/signup", routes.SignupPostHandler).Methods("POST")
+
+	// Routes for learning purpose which will be refactored and code will be
+	// shifted to their respective file
 	r.HandleFunc("/post", routes.PublishPostBlog).Methods("POST")
 	r.HandleFunc("/cookies", routes.WriteCookie).Methods("GET")
 	r.HandleFunc("/cook", routes.ReadCookie).Methods("GET")
