@@ -7,5 +7,13 @@ const (
 )
 
 const (
-	createBlogTable = ` `
+	createBlogTable = `CREATE TABLE article (
+		id int NOT NULL,
+		content int NOT NULL,
+		author int,
+		PRIMARY KEY (id),
+		FOREIGN KEY (author) REFERENCES user(id)
+	);`
+
+	userProfile = `CREATE TABLE profile`
 )

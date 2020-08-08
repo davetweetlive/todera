@@ -22,9 +22,7 @@ func main() {
 
 	// Routes for learning purpose which will be refactored and code will be
 	// shifted to their respective file
-	r.HandleFunc("/post", routes.PublishPostBlog).Methods("POST")
-	r.HandleFunc("/cookies", routes.WriteCookie).Methods("GET")
-	r.HandleFunc("/cook", routes.ReadCookie).Methods("GET")
+	r.HandleFunc("/index", routes.TestTemplate).Methods("GET")
 
 	// Static file server
 	fs := http.FileServer(http.Dir("./static/"))

@@ -49,11 +49,8 @@ func WriteCookie(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, cookie)
 }
 
-func ReadCookie(w http.ResponseWriter, r *http.Request) {
-	c, err := r.Cookie("my-cookie")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+func TestTemplate(w http.ResponseWriter, r *http.Request) {
+	if err := templates.ExecuteTemplate(w, "index.html", nil); err != nil {
+		fmt.Println("Couldn't parse template")
 	}
-	fmt.Fprintln(w, "COOKIE WRITTNE ", c)
-	// fmt.Fprintln(w, "CHECK APPlication in dev tools in chrome")
 }
