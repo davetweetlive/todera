@@ -43,13 +43,25 @@ func init() {
 // D
 // E
 // X
-// Page handler
+// Page handler if authenticated then users details will be displayed
+// Else just usual information will be rendered including login signup
+// options.
 func HomePageGetHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := sessions.Store.Get(r, "session")
+	if err != nil {
+		fmt.Println("Session not available")
+		templates.ExecuteTemplate(w, "index.html", pageInfo)
+	}
+	loggedInAs := session.Values["username"]
+	fmt.Println("Logged in as:", loggedInAs)
 	templates.ExecuteTemplate(w, "index.html", pageInfo)
+
 }
 
 func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
-	templates.ExecuteTemplate(w, "login.html", pageInfo)
+	if err := templates.ExecuteTemplate(w, "login.html", pageInfo); err != nil {
+		fmt.Println("Couldn't find login template")
+	}
 }
 
 // L
@@ -83,7 +95,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("Can't find the session")
 	}
-	session.Values["userid"] = username
+	session.Values["username"] = username
 	session.Save(r, w)
 
 	// Removed StatusFound which is 302 and added StatusSeeOther which is 303
@@ -113,12 +125,10 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 		switch err {
 
 		case models.ErrUsernameIsTaken:
-			fmt.Println("Handler: Case usernam is taken")
 			pageInfo.ErrorMsg = models.ErrUsernameIsTaken
 			templates.ExecuteTemplate(w, "signup.html", pageInfo)
 
 		case models.ErrEmailAlreadyRegistered:
-			fmt.Println("Handler: Email is already registered")
 
 			pageInfo.ErrorMsg = models.ErrEmailAlreadyRegistered
 			templates.ExecuteTemplate(w, "signup.html", pageInfo)
@@ -142,7 +152,7 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 func LogoutGetHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
 
-	delete(session.Values, "userid")
+	delete(session.Values, "username")
 	session.Save(r, w)
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

@@ -5,3 +5,7 @@ const (
 	selectEmail    = "SELECT email FROM users WHERE email = ?"
 	createUser     = "INSERT INTO users (username, password, email, created_at) VALUES (?, ?, ?, ?);"
 )
+
+const (
+	createBlogTable = ` `
+)
