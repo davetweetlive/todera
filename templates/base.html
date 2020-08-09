@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {{define "header"}}
+
 <head>
   <title>{{ .Title }} &mdash; Place for readers and writers!</title>
   <meta charset="utf-8">
@@ -32,6 +33,7 @@
 
 </head>
 {{end}}
+
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
   <div class="site-wrap">
@@ -55,7 +57,7 @@
               {{ .Title }}
             </a>
 
-            <a href="#" class="ml-auto d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
+            <a href="/" class="ml-auto d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
                 class="icon-menu h3"></span></a>
 
           </div>
@@ -92,11 +94,6 @@
                 <li><a href="#">One more separated link</a></li> -->
               </ul>
             </div>
-
-            <!-- <div class="d-flex">
-              <a href="#">Login</a>
-            </div> -->
-
           </div>
           <div class="col-6 d-block d-lg-none text-right">
 
@@ -647,7 +644,7 @@
 
 
   <script src="/static/js/main.js"></script>
-    {{end}}
+  {{end}}
 </body>
 
 </html>

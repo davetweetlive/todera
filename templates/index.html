@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-{{template "header"}}
+{{template "header" .}}
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-    {{template "navigation"}}
+    {{template "navigation" .}}
 
-    {{template "slidshow"}}
-    {{template "recent_posts"}}
-    {{template "post_section2"}}
-    {{template "footer"}}
+    {{template "slidshow" .}}
+    {{template "recent_posts" .}}
+    {{template "post_section2" .}}
+    {{template "footer" .}}
 
     {{template "scripts"}}
 </body>

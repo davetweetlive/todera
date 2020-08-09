@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "header"}}
+<style>
+    .accounts {
+        margin: 0;
+        padding: 10%;
+    }
+</style>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    {{template "navigation" .}}
+    <div class="accounts">
+        <div class="account-form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="copyright">
+                            <form method="POST">
+                                <input type="text" class="form-control" name="username"
+                                    placeholder="Enter your username" required><br><br>
+                                <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                                    required><br><br>
+                                <input type="password" class="form-control" name="password"
+                                    placeholder="Enter your password" required><br><br>
+                                <input type="password" class="form-control" name="password1"
+                                    placeholder="Verify password" required><br><br>
+                                <button type="submit" class="btn btn-secondary"><span
+                                        class="icon-paper-plane"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{template "footer" .}}
+
+    {{template "scripts"}}
+</body>
+
+
+</html>
