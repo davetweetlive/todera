@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{{template "header"}}
+{{template "header" .}}
 <style>
     .accounts {
         margin: 0;
@@ -10,6 +10,7 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     {{template "navigation" .}}
+
     <div class="accounts">
         <div class="account-form">
             <div class="container">
@@ -30,6 +31,7 @@
             </div>
         </div>
     </div>
+
     {{template "footer" .}}
 
     {{template "scripts"}}

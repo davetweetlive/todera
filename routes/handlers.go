@@ -49,8 +49,7 @@ func HomePageGetHandler(w http.ResponseWriter, r *http.Request) {
 		templates.ExecuteTemplate(w, "index.html", pageInfo)
 		return
 	}
-	pageInfo.IsAuthenticated = true
-	pageInfo.AuthenticationDetails.SessionVal = session.Values["username"]
+
 	fmt.Println("Logged in as:", pageInfo.AuthenticationDetails.SessionVal)
 	templates.ExecuteTemplate(w, "index.html", pageInfo)
 
@@ -95,7 +94,8 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	session.Values["username"] = username
 	session.Save(r, w)
-
+	pageInfo.IsAuthenticated = true
+	pageInfo.AuthenticationDetails.SessionVal = session.Values["username"]
 	// Removed StatusFound which is 302 and added StatusSeeOther which is 303
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
@@ -150,7 +150,8 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 func LogoutGetHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
 	session.Options.MaxAge = -1
-	delete(session.Values, "username")
+	delete(session.Values, "session")
+	pageInfo.IsAuthenticated = false
 	if err := session.Save(r, w); err != nil {
 		fmt.Println("Couldn't delete the session")
 	}
