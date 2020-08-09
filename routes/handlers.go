@@ -4,25 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
+	"madhyam/info"
 	"madhyam/models"
 	"madhyam/sessions"
 	"madhyam/utils"
 	"net/http"
-	"time"
 )
-
-type PageInfo struct {
-	Title      string
-	Owner      string
-	LastUpdate time.Time
-	ErrorMsg   interface{}
-}
 
 var templates *template.Template
 var db *sql.DB
-var pageInfo PageInfo
 
 // Initialization of variables
+var pageInfo *info.PageInfo
 
 func init() {
 	templates = template.Must(template.ParseGlob("templates/*.html"))
@@ -30,12 +23,7 @@ func init() {
 	db = models.ConDB()
 
 	// Page info passed to the template from the backend
-	pageInfo = PageInfo{
-		Title:      "Madhyam",
-		Owner:      "Saffron Coders",
-		LastUpdate: time.Now(),
-		ErrorMsg:   nil,
-	}
+	pageInfo = info.GetPageInfo()
 }
 
 // I
@@ -48,12 +36,22 @@ func init() {
 // options.
 func HomePageGetHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := sessions.Store.Get(r, "session")
+	fmt.Println("Session value", session)
 	if err != nil {
 		fmt.Println("Session not available")
 		templates.ExecuteTemplate(w, "index.html", pageInfo)
+		return
 	}
-	loggedInAs := session.Values["username"]
-	fmt.Println("Logged in as:", loggedInAs)
+	if session == nil {
+		pageInfo.IsAuthenticated = false
+		pageInfo.AuthenticationDetails.SessionVal = nil
+		fmt.Println("Not authenticated:", pageInfo.AuthenticationDetails.SessionVal)
+		templates.ExecuteTemplate(w, "index.html", pageInfo)
+		return
+	}
+	pageInfo.IsAuthenticated = true
+	pageInfo.AuthenticationDetails.SessionVal = session.Values["username"]
+	fmt.Println("Logged in as:", pageInfo.AuthenticationDetails.SessionVal)
 	templates.ExecuteTemplate(w, "index.html", pageInfo)
 
 }
@@ -151,8 +149,10 @@ func SignupPostHandler(w http.ResponseWriter, r *http.Request) {
 // Handler for terminationg session
 func LogoutGetHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
-
+	session.Options.MaxAge = -1
 	delete(session.Values, "username")
-	session.Save(r, w)
+	if err := session.Save(r, w); err != nil {
+		fmt.Println("Couldn't delete the session")
+	}
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

@@ -3,7 +3,7 @@
 {{define "header"}}
 
 <head>
-  <title>{{ .Title }} &mdash; Place for readers and writers!</title>
+  <title>{{ .WebsiteTitle }} &mdash; {{ .TagLine }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -54,7 +54,7 @@
         <div class="row align-items-center">
           <div class="col-12 col-lg-6 d-flex">
             <a href="/" class="site-logo">
-              {{ .Title }}
+              {{ .WebsiteTitle }}
             </a>
 
             <a href="/" class="ml-auto d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
@@ -69,7 +69,6 @@
               <a href="#" class="d-inline-block p-3"><span class="icon-instagram"></span></a>
             </div> -->
             <form action="#" class="search-form d-inline-block">
-
               <div class="d-flex">
                 <input type="email" class="form-control" placeholder="Search...">
                 <button type="submit" class="btn btn-secondary"><span class="icon-search"></span></button>
@@ -78,8 +77,28 @@
             <div class="ml-md-auto top-social d-none d-lg-inline-block">
               <!-- <a href="#" class="d-inline-block p-3">Accounts</a> -->
 
+              {{if .IsAuthenticated}}
+              <div class="search-form d-inline-block">
+                <div class="d-flex">
+                  <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/profile-1506810-1278719.png" alt=""
+                    width="50px" , height="50px">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <h3 style="padding-top: 5%;">davetweetlive</h3>
+                  </a>
+                  <script>
+                    var a = "abc";
+                    var b = 2;
+                  </script>
+                  <ul class="dropdown-menu">
+                    <li><a href="/profile" onclick='test(a,b)'>Profile</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              {{else}}
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                aria-expanded="false">Account <span class="caret"></span></a>
+                aria-expanded="false">Account </a>
               <script>
                 var a = "abc";
                 var b = 2;
@@ -93,6 +112,7 @@
                 <li><a href="#">Separated link</a></li>
                 <li><a href="#">One more separated link</a></li> -->
               </ul>
+              {{end}}
             </div>
           </div>
           <div class="col-6 d-block d-lg-none text-right">

@@ -13,9 +13,10 @@ import (
 var db *sql.DB
 
 type User struct {
-	username string
-	email    string
-	password []byte
+	username     string
+	email        string
+	password     []byte
+	isASuperUser bool
 }
 
 var (
@@ -50,7 +51,7 @@ func (u *User) ifUsernameTaken() bool {
 
 // Temproarily written and It will be refactored shortly
 func NewUser(username, email string, hash []byte) (*User, error) {
-	return &User{username, email, hash}, nil
+	return &User{username, email, hash, false}, nil
 }
 
 // Registers a new user to the system
@@ -102,4 +103,8 @@ func AuthenticateUser(username, password string) error {
 		return ErrUsernamePasswordMismatch
 	}
 	return err
+}
+
+func CreateProfile() {
+
 }
