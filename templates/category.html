@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "header" .}}
+<style>
+    .accounts {
+        margin: 0;
+        padding: 10%;
+    }
+</style>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    {{template "navigation" .}}
+
+    <div class="accounts">
+        <div class="account-form">
+            <div class="container">
+                <a href="">
+                    <p>#Tech</p>
+                    <p>#Programming</p>
+                    <p>#Golang</p>
+                    <p>#Linux</p>
+                    <p>#Java</p>
+                    <p>#Python</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{template "footer" .}}
+
+    {{template "scripts"}}
+</body>
+
+
+</html>

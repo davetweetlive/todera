@@ -19,6 +19,10 @@ type User struct {
 	isASuperUser bool
 }
 
+type Profile struct {
+	ProfileImage []byte
+}
+
 var (
 	ErrEmailAlreadyRegistered   = errors.New("The email is already registered")
 	ErrUsernameIsTaken          = errors.New("The username is already taken")

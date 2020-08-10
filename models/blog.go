@@ -9,9 +9,22 @@ type Blogs struct {
 type Blog struct {
 	Title      string
 	Content    string
-	Author     string
+	Author     User
+	Thumbnail  []byte
 	PublishOn  time.Time
 	ModifiedOn time.Time
+	Tags       []Tag
+}
+
+type Comment struct {
+	Content     string
+	CommentTime time.Time
+	ModifiedOn  time.Time
+	User
+	Blog
+}
+type Tag struct {
+	tag string
 }
 
 func PostBlog() {
