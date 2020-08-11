@@ -1,0 +1,60 @@
+{
+ 	"articles": [
+ 		{
+ 			"title": "Hola I'm writing",
+ 			"content": "These are all about my skills upgradations",
+ 			"thumbnail": "c29tZXVybA==",
+ 			"release date": "2020-08-11T19:18:02.232569197+05:30",
+ 			"update date": "2020-08-11T19:18:02.232569735+05:30",
+ 			"author": {
+ 				"ProfileImage": null
+ 			},
+ 			"tags": [
+ 				{
+ 					"tag": "golang"
+ 				},
+ 				{
+ 					"tag": "learning"
+ 				}
+ 			],
+ 			"comments": [
+ 				{
+ 					"content": "Good one",
+ 					"comment time": "2020-08-11T19:18:02.23257001+05:30",
+ 					"update date": "2020-08-11T19:18:02.232570272+05:30",
+ 					"writer": {
+ 						"ProfileImage": null
+ 					}
+ 				}
+ 			]
+ 		},
+ 		{
+ 			"title": "Another Title",
+ 			"content": "Well it matters when it runs sucessfully on machine, Some people say it as Feature complete",
+ 			"thumbnail": "c29tZXVybA==",
+ 			"release date": "2020-08-11T19:18:02.23257076+05:30",
+ 			"update date": "2020-08-11T19:18:02.232571035+05:30",
+ 			"author": {
+ 				"ProfileImage": null
+ 			},
+ 			"tags": [
+ 				{
+ 					"tag": "golang"
+ 				},
+ 				{
+ 					"tag": "learning"
+ 				}
+ 			],
+ 			"comments": [
+ 				{
+ 					"content": "Can be improved",
+ 					"comment time": "2020-08-11T19:18:02.232571297+05:30",
+ 					"update date": "2020-08-11T19:18:02.232571735+05:30",
+ 					"writer": {
+ 						"ProfileImage": null
+ 					}
+ 				}
+ 			]
+ 		}
+ 	]
+ }

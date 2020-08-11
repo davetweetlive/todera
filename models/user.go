@@ -14,12 +14,12 @@ var db *sql.DB
 
 type User struct {
 	username     string
-	email        string
 	password     []byte
+	email        string
+	firstName    string
+	lastName     string
+	createdAt    time.Time
 	isASuperUser bool
-}
-
-type Profile struct {
 	ProfileImage []byte
 }
 
@@ -55,7 +55,12 @@ func (u *User) ifUsernameTaken() bool {
 
 // Temproarily written and It will be refactored shortly
 func NewUser(username, email string, hash []byte) (*User, error) {
-	return &User{username, email, hash, false}, nil
+	return &User{
+		username:     username,
+		email:        email,
+		password:     hash,
+		isASuperUser: false,
+	}, nil
 }
 
 // Registers a new user to the system
