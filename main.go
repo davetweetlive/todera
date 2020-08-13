@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"madhyam/models"
 	"madhyam/routes"
 	"net/http"
 
@@ -11,7 +10,8 @@ import (
 
 func main() {
 
-	fmt.Println(models.GenerateJson())
+	// fmt.Println(models.GenerateJson())
+	// logging.TestLogging()
 	// Create a mux router
 	r := mux.NewRouter()
 	r.HandleFunc("/", routes.HomePageGetHandler).Methods("GET")

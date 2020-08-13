@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"madhyam/logging"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,12 +28,12 @@ type Mysqldb struct {
 func ConnectionStr() string {
 	file, err := os.Open("config/dbcred.json")
 	if err != nil {
-		fmt.Println("Couldn't open the database credential file")
+		logging.WriteLog(logging.ERROR, "Couldn't find database credentials file.")
 	}
 
 	bytearr, err := ioutil.ReadAll(file)
 	if err != nil {
-		fmt.Println("Couldn't parse the file into byte slice")
+		logging.WriteLog(logging.ERROR, "Error occoured while reading the credential file.")
 	}
 	dbc := DBCreds{}
 
