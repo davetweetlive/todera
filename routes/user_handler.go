@@ -9,6 +9,8 @@ import (
 	"madhyam/sessions"
 	"madhyam/utils"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var templates *template.Template
@@ -19,10 +21,7 @@ var pageInfo *info.PageInfo
 
 func init() {
 	templates = template.Must(template.ParseGlob("templates/*.html"))
-	// Database
 	db = models.ConDB()
-
-	// Page info passed to the template from the backend
 	pageInfo = info.GetPageInfo()
 }
 
@@ -156,4 +155,17 @@ func LogoutGetHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Couldn't delete the session")
 	}
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
+// P
+// R
+// O
+// F
+// I
+// L
+// E
+func PofileGetHandler(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["user"]
+	fmt.Println(userId)
 }

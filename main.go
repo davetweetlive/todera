@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"madhyam/logging"
 	"madhyam/routes"
 	"net/http"
 
@@ -10,8 +11,6 @@ import (
 
 func main() {
 
-	// fmt.Println(models.GenerateJson())
-	// logging.TestLogging()
 	// Create a mux router
 	r := mux.NewRouter()
 	r.HandleFunc("/", routes.HomePageGetHandler).Methods("GET")
@@ -20,6 +19,7 @@ func main() {
 	r.HandleFunc("/signup", routes.SignupGetHandler).Methods("GET")
 	r.HandleFunc("/signup", routes.SignupPostHandler).Methods("POST")
 	r.HandleFunc("/logout", routes.LogoutGetHandler).Methods("GET")
+	r.HandleFunc("/me/{user}", routes.PofileGetHandler).Methods("GET")
 
 	// Routes for learning purpose which will be refactored and code will be
 	// shifted to their respective file
@@ -34,6 +34,6 @@ func main() {
 
 	fmt.Println("Starting the server at port :8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
-		fmt.Println("Couldn't start server at port 8080")
+		logging.WriteLog(logging.FATAL, "Couldn't start the server")
 	}
 }
