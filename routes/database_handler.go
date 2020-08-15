@@ -7,7 +7,7 @@ import (
 )
 
 func UserTable() {
-	row, err := db.Query(query.CreateUser)
+	row, err := db.Query(query.CreateUserTable)
 	if err != nil {
 		fmt.Println("Can't run the create user query", err)
 	}
@@ -15,7 +15,7 @@ func UserTable() {
 }
 
 func ArticleTable() {
-	row, err := db.Query(query.CreateArticle)
+	row, err := db.Query(query.CreateArticleTable)
 	if err != nil {
 		fmt.Println("Can't run the create article query", err)
 	}
@@ -23,7 +23,7 @@ func ArticleTable() {
 }
 
 func CommentTable() {
-	row, err := db.Query(query.CreateComment)
+	row, err := db.Query(query.CreateCommentTable)
 	if err != nil {
 		fmt.Println("Can't run the create comment query", err)
 	}
@@ -31,7 +31,7 @@ func CommentTable() {
 }
 
 func TagTable() {
-	row, err := db.Query(query.CreateTag)
+	row, err := db.Query(query.CreateTagTable)
 	if err != nil {
 		fmt.Println("Can't run the create tag query", err)
 	}

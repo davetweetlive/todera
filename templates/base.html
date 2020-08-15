@@ -77,14 +77,14 @@
                   <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/profile-1506810-1278719.png" alt=""
                     width="50px" , height="50px">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <h3 style="padding-top: 5%;">davetweetlive</h3>
+                    <h3 style="padding-top: 5%;">{{.AuthenticationDetails.SessionVal}}</h3>
                   </a>
                   <script>
                     var a = "abc";
                     var b = 2;
                   </script>
                   <ul class="dropdown-menu">
-                    <li><a href="/profile" onclick='test(a,b)'>Profile</a></li>
+                    <li><a href="/me/{{.AuthenticationDetails.SessionVal}}" onclick='test(a,b)'>Profile</a></li>
                     <li><a href="/logout">Logout</a></li>
                   </ul>
                 </div>

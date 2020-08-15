@@ -1,7 +1,7 @@
 package query
 
 const (
-	CreateUser = `CREATE TABLE IF NOT EXISTS user (
+	CreateUserTable = `CREATE TABLE IF NOT EXISTS user (
 		user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		username VARCHAR(255) NOT NULL,
 		email  VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ const (
 		is_superuser BOOL, 
 		profile_photo BLOB);`
 
-	CreateArticle = `CREATE TABLE IF NOT EXISTS article (
+	CreateArticleTable = `CREATE TABLE IF NOT EXISTS article (
 		post_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		title VARCHAR(255) NOT NULL,
 		content TEXT,
@@ -22,7 +22,7 @@ const (
 		update_time DATETIME DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (author) REFERENCES user(user_id));`
 
-	CreateComment = `CREATE TABLE IF NOT EXISTS comment (
+	CreateCommentTable = `CREATE TABLE IF NOT EXISTS comment (
 		comment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		article BIGINT,
 		comment TEXT ,
@@ -32,7 +32,29 @@ const (
 		FOREIGN KEY (user) REFERENCES user(user_id),
 		FOREIGN KEY (article) REFERENCES article(post_id));`
 
-	CreateTag = `CREATE TABLE IF NOT EXISTS tag (
+	CreateTagTable = `CREATE TABLE IF NOT EXISTS tag (
 		tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		tag_name BIGINT);`
+)
+
+// Queries to create rows in different tables
+// User table
+// Article tables
+// Comment table
+// Tag Table
+const (
+	CreateUser = `INSERT INTO user (username, password, email, 
+		is_superuser) VALUES (?, ?, ?, ?);`
+
+	CreatePost = ``
+
+	CreateComment = ``
+
+	CreateTag
+)
+
+// Utilities queries
+const (
+	IfEmailExists    = `SELECT email FROM user WHERE email = ?;`
+	IfUsernameExists = `SELECT username FROM user WHERE username = ?;`
 )

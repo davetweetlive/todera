@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"madhyam/models/query"
 	"madhyam/utils"
 	"time"
 
@@ -39,7 +40,7 @@ func init() {
 // To check whether the email provided by a user is already registered or not
 func (u *User) ifEmailRegistered() bool {
 	fmt.Println("Email already registered mothod")
-	if err := db.QueryRow(selectEmail, u.email).Scan(&uname); err == nil {
+	if err := db.QueryRow(query.IfEmailExists, u.email).Scan(&uname); err == nil {
 		return true
 	}
 	return false
@@ -47,7 +48,7 @@ func (u *User) ifEmailRegistered() bool {
 
 // To check whether the user name has been already registered or taken by other user of the syatem
 func (u *User) ifUsernameTaken() bool {
-	if err := db.QueryRow(selectUsername, u.username).Scan(&uname); err == nil {
+	if err := db.QueryRow(query.IfUsernameExists, u.username).Scan(&uname); err == nil {
 		return true
 	}
 	return false
@@ -87,7 +88,7 @@ func RegisterUser(username, email, password string) error {
 	}
 
 	// 5. Register user
-	_, err = db.Query(createUser, username, string(hash), email, time.Now())
+	_, err = db.Query(query.CreateUser, username, string(hash), email, false)
 	if err != nil {
 		fmt.Println("Couldn't register!")
 		return err
@@ -101,7 +102,7 @@ func RegisterUser(username, email, password string) error {
 func AuthenticateUser(username, password string) error {
 	var hash string
 
-	if err := db.QueryRow("SELECT  `password` FROM users where username = ? or email = ?;", username, username).Scan(&hash); err != nil {
+	if err := db.QueryRow("SELECT  `password` FROM user where username = ? or email = ?;", username, username).Scan(&hash); err != nil {
 		fmt.Println("Login validation failed!")
 		return ErrUserNotAvailable
 	}
@@ -112,8 +113,4 @@ func AuthenticateUser(username, password string) error {
 		return ErrUsernamePasswordMismatch
 	}
 	return err
-}
-
-func CreateProfile() {
-
 }
