@@ -26,7 +26,7 @@ type Mysqldb struct {
 }
 
 func ConnectionStr() string {
-	file, err := os.Open("config/dbcred.json")
+	file, err := os.Open("/usr/local/bin/dbcred.json")
 	if err != nil {
 		logging.WriteLog(logging.ERROR, "Couldn't find database credentials file.")
 	}
