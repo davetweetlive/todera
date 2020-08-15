@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"madhyam/models/query"
+	"net/http"
 )
 
 func UserTable() {
@@ -22,7 +23,7 @@ func ArticleTable() {
 }
 
 func CommentTable() {
-	row, err := db.Query(query.CreateArticle)
+	row, err := db.Query(query.CreateComment)
 	if err != nil {
 		fmt.Println("Can't run the create comment query", err)
 	}
@@ -30,9 +31,17 @@ func CommentTable() {
 }
 
 func TagTable() {
-	row, err := db.Query(query.CreateArticle)
+	row, err := db.Query(query.CreateTag)
 	if err != nil {
 		fmt.Println("Can't run the create tag query", err)
 	}
 	row.Close()
+}
+
+func MigrationHandler(w http.ResponseWriter, r *http.Request) {
+	UserTable()
+	ArticleTable()
+	CommentTable()
+	TagTable()
+	w.Write([]byte("Migrated succesfully"))
 }

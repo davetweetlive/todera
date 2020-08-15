@@ -12,7 +12,7 @@ const (
 		is_superuser BOOL, 
 		profile_photo BLOB);`
 
-	CreateArticle = `CREATE TABLE article (
+	CreateArticle = `CREATE TABLE IF NOT EXISTS article (
 		post_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		title VARCHAR(255) NOT NULL,
 		content TEXT,

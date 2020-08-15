@@ -26,6 +26,8 @@ func main() {
 	r.HandleFunc("/index", routes.TestTemplate).Methods("GET")
 	r.HandleFunc("/category", routes.CategoriesHandler).Methods("GET")
 
+	r.HandleFunc("/makemigrations", routes.MigrationHandler).Methods("GET")
+
 	// Static file server
 	fs := http.FileServer(http.Dir("./static/"))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
