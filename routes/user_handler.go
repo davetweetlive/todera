@@ -54,6 +54,12 @@ func HomePageGetHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// L
+// O
+// G
+// I
+// N
+// Handler for GET method
 func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 	if err := templates.ExecuteTemplate(w, "login.html", pageInfo); err != nil {
 		fmt.Println("Couldn't find login template")
@@ -93,12 +99,18 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	session.Values["username"] = username
 	session.Save(r, w)
+
 	pageInfo.IsAuthenticated = true
 	pageInfo.AuthenticationDetails.SessionVal = session.Values["username"]
 	// Removed StatusFound which is 302 and added StatusSeeOther which is 303
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+// S
+// I
+// G
+// N
+// Up GET handler
 func SignupGetHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "signup.html", pageInfo)
 }
@@ -168,4 +180,6 @@ func PofileGetHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["user"]
 	fmt.Println(userId)
+
+	templates.ExecuteTemplate(w, "profile.html", pageInfo)
 }

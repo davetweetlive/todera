@@ -10,6 +10,7 @@ type PageInfo struct {
 	ErrorMsg        interface{}
 	IsAuthenticated bool
 	AuthenticationDetails
+	Body interface{}
 }
 
 type AuthenticationDetails struct {
